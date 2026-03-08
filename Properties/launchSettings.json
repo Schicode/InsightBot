@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "InsightBot (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "InsightBot (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

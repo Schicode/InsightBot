@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="InsightBot.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:InsightBot"
+    Title="InsightBot">
+
+    <Grid>
+        <NavigationView
+            x:Name="NavView"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="True"
+            PaneTitle="InsightBot"
+            SelectionChanged="NavView_SelectionChanged"
+            OpenPaneLength="200">
+
+            <NavigationView.Header>
+                <local:StatusBadge x:Name="HeaderBadge" Margin="16,8" />
+            </NavigationView.Header>
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="dashboard" Icon="Home"          Content="Dashboard" />
+                <NavigationViewItem Tag="hunt"      Icon="Target"        Content="Hunt"      />
+                <NavigationViewItem Tag="loot"      Icon="Shop"          Content="Loot"      />
+                <NavigationViewItem Tag="buffs"     Icon="Favorite"      Content="Buffs"     />
+                <NavigationViewItem Tag="skills"  Icon="Library"       Content="Skills" />
+                <NavigationViewItem Tag="town"      Icon="Map"           Content="Town"      />
+                <NavigationViewItem Tag="log"       Icon="List"          Content="Log"       />
+                <NavigationViewItem Tag="gamedata"  Icon="Library"       Content="Game Data" />
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame" />
+        </NavigationView>
+    </Grid>
+</Window>

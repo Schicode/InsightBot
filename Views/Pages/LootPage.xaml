@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="InsightBot.Views.Pages.LootPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Padding="24">
+        <StackPanel Spacing="20" MaxWidth="700">
+
+            <TextBlock Text="Loot Settings" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <Border Style="{StaticResource CardBorderStyle}">
+                <StackPanel Spacing="16" Padding="20">
+
+                    <ToggleSwitch Header="Enable Looting"
+                                  IsOn="{x:Bind VM.Loot.Enabled, Mode=TwoWay}" />
+
+                    <ToggleSwitch Header="Pick Up Gold"
+                                  IsOn="{x:Bind VM.Loot.PickUpGold, Mode=TwoWay}" />
+
+                    <!-- Max loot range -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Max Loot Range (world units)" />
+                        <Slider x:Name="LootRangeSlider"
+                                Minimum="30" Maximum="500" StepFrequency="10"
+                                Value="{x:Bind VM.Loot.MaxLootRange, Mode=TwoWay}" />
+                        <TextBlock Text="{x:Bind LootRangeSlider.Value, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!-- Allowed RefIds -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Allowed Item RefIds (empty = all)" />
+                        <TextBox Text="{x:Bind VM.AllowedRefIdsText, Mode=TwoWay}"
+                                 PlaceholderText="0x1234,0x5678" />
+                    </StackPanel>
+
+                    <!-- Ignore RefIds -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Ignore Item RefIds" />
+                        <TextBox Text="{x:Bind VM.IgnoreRefIdsText, Mode=TwoWay}"
+                                 PlaceholderText="0x0001" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

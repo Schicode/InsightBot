@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="InsightBot.Views.Pages.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:InsightBot"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Padding="24">
+        <StackPanel Spacing="20" MaxWidth="700">
+
+            <TextBlock Text="Dashboard" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <!-- Bot controls -->
+            <Border Style="{StaticResource CardBorderStyle}">
+                <StackPanel Spacing="16" Padding="20">
+                    <TextBlock Text="Bot Control" Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                        <TextBlock Text="State:" VerticalAlignment="Center" />
+                        <Border CornerRadius="12" Padding="12,4"
+                                Background="{ThemeResource SystemFillColorSuccessBackgroundBrush}">
+                            <TextBlock Text="{x:Bind VM.StateLabel, Mode=OneWay}" FontWeight="SemiBold" />
+                        </Border>
+                    </StackPanel>
+
+                    <TextBlock Text="{x:Bind VM.StatusMessage, Mode=OneWay}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               TextWrapping="Wrap" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="▶ Start"  Command="{x:Bind VM.StartCommand}"  Style="{StaticResource AccentButtonStyle}" />
+                        <Button Content="⏹ Stop"   Command="{x:Bind VM.StopCommand}" />
+                        <Button Content="⏸ Pause"  Command="{x:Bind VM.PauseCommand}" />
+                        <Button Content="▶ Resume" Command="{x:Bind VM.ResumeCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Session stats -->
+            <Border Style="{StaticResource CardBorderStyle}">
+                <StackPanel Spacing="12" Padding="20">
+                    <TextBlock Text="Session Stats" Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                        <local:StatCard Grid.Column="0" Label="Monsters Killed" Value="{x:Bind VM.MonstersKilled, Mode=OneWay}" />
+                        <local:StatCard Grid.Column="1" Label="Items Picked Up"  Value="{x:Bind VM.ItemsPickedUp,  Mode=OneWay}" />
+                        <local:StatCard Grid.Column="2" Label="Gold Collected"   Value="{x:Bind VM.GoldCollected,  Mode=OneWay}" />
+                        <local:StatCard Grid.Row="1" Grid.Column="0" Label="Potions Used" Value="{x:Bind VM.PotionsUsed, Mode=OneWay}" />
+                        <local:StatCard Grid.Row="1" Grid.Column="1" Label="Deaths"       Value="{x:Bind VM.DeathCount,  Mode=OneWay}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Profile -->
+            <Border Style="{StaticResource CardBorderStyle}">
+                <StackPanel Spacing="12" Padding="20">
+                    <TextBlock Text="Profile" Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                    <ComboBox ItemsSource="{x:Bind VM.AvailableProfiles, Mode=OneWay}"
+                              SelectedItem="{x:Bind VM.ProfileName, Mode=TwoWay}"
+                              HorizontalAlignment="Stretch" MinWidth="200" />
+
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Load" Command="{x:Bind VM.LoadProfileCommand}" />
+                        <Button Content="Save" Command="{x:Bind VM.SaveProfileCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

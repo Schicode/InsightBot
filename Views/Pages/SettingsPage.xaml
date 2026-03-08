@@ -1,0 +1,212 @@
+<Page
+    x:Class="InsightBot.Views.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:InsightBot.Views.Pages"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Padding="20" VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="16" MaxWidth="700">
+
+            <!-- ═══ PK2 Section ════════════════════════════════════════════════ -->
+            <TextBlock Text="Media.pk2 Configuration"
+                       Style="{StaticResource TitleTextBlockStyle}"/>
+
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="16">
+                <StackPanel Spacing="12">
+
+                    <!-- Path -->
+                    <TextBlock Text="PK2 Path" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0"
+                                 PlaceholderText="C:\Silkroad Online\Client\Silkroad\Media.pk2"
+                                 Text="{x:Bind VM.Pk2Path, Mode=TwoWay}"/>
+                        <Button Grid.Column="1"
+                                Content="Browse…"
+                                x:Name="BrowseButton"
+                                Click="BrowseButton_Click"/>
+                    </Grid>
+
+                    <!-- Blowfish Key -->
+                    <TextBlock Text="Blowfish Key" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <TextBox PlaceholderText="169841 (default iSRO)"
+                             Text="{x:Bind VM.Pk2Key, Mode=TwoWay}"/>
+                    <TextBlock Text="The default key for international Silkroad Online is 169841."
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+
+                    <!-- Load button + progress -->
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0"
+                                Content="Load PK2"
+                                Style="{StaticResource AccentButtonStyle}"
+                                Command="{x:Bind VM.LoadPk2Command}"/>
+
+                        <TextBlock Grid.Column="1"
+                                   Text="{x:Bind VM.LoadProgress, Mode=OneWay}"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource CaptionTextBlockStyle}"/>
+
+                        <ProgressRing Grid.Column="2"
+                                      IsActive="{x:Bind VM.IsLoading, Mode=OneWay}"
+                                      Width="24" Height="24"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Connection Section ════════════════════════════════════════ -->
+            <TextBlock Text="Connection" Style="{StaticResource TitleTextBlockStyle}"/>
+
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="16">
+                <StackPanel Spacing="12">
+
+                    <!-- Gateway from PK2 dropdown -->
+                    <TextBlock Text="Gateway Server" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Grid.Column="0"
+                                  PlaceholderText="Select from PK2 or enter manually"
+                                  ItemsSource="{x:Bind VM.GatewayOptions, Mode=OneWay}"
+                                  SelectedIndex="{x:Bind VM.SelectedGatewayIndex, Mode=TwoWay}"
+                                  HorizontalAlignment="Stretch"/>
+
+                        <Button Grid.Column="1"
+                                Content="Auto-fill from PK2"
+                                Command="{x:Bind VM.AutoFillFromPk2Command}"/>
+                    </Grid>
+
+                    <!-- Manual host/port -->
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0"
+                                 Header="Gateway Host"
+                                 PlaceholderText="gwgt1.joymax.com"
+                                 Text="{x:Bind VM.GatewayHost, Mode=TwoWay}"/>
+
+                        <TextBox Grid.Column="1"
+                                 Header="Port"
+                                 PlaceholderText="15779"
+                                 Text="{x:Bind VM.GatewayPortText, Mode=TwoWay}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Account Section ══════════════════════════════════════════ -->
+            <TextBlock Text="Account Credentials" Style="{StaticResource TitleTextBlockStyle}"/>
+
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="16">
+                <StackPanel Spacing="12">
+
+                    <TextBox Header="Username"
+                             PlaceholderText="Your iSRO username"
+                             Text="{x:Bind VM.Username, Mode=TwoWay}"/>
+
+                    <PasswordBox Header="Password"
+                                 PlaceholderText="Your password"
+                                 x:Name="PasswordBox"
+                                 PasswordChanging="PasswordBox_PasswordChanging"/>
+
+                    <!-- Secondary PIN -->
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Secondary Security PIN (PassKey)"
+                                   Style="{StaticResource BodyStrongTextBlockStyle}"/>
+
+                        <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                                   TextWrapping="Wrap"
+                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                            Required if your account has a secondary PIN enabled.
+                            This is the 6–8 digit code that the game client asks for
+                            after you enter your password. Leave empty if not enabled.
+                        </TextBlock>
+
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <PasswordBox Grid.Column="0"
+                                         PlaceholderText="6–8 digit PIN (optional)"
+                                         x:Name="PinBox"
+                                         PasswordChanging="PinBox_PasswordChanging"/>
+
+                            <Button Grid.Column="1"
+                                    Content="Clear"
+                                    Command="{x:Bind VM.ClearPinCommand}"/>
+                        </Grid>
+
+                        <!-- PIN status indicator -->
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <FontIcon FontFamily="Segoe Fluent Icons"
+                                      Glyph="&#xE72E;"
+                                      FontSize="14"
+                                      Foreground="Green"/>
+                            <TextBlock Text="PIN configured"
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       Foreground="Green"
+                                       Visibility="{x:Bind VM.HasSecondaryPin, Converter={StaticResource BoolToVisConverter}, Mode=OneWay}"/>
+                            <FontIcon FontFamily="Segoe Fluent Icons"
+                                      Glyph="&#xE8FB;"
+                                      FontSize="14"
+                                      Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock Text="No PIN configured"
+                                       Style="{StaticResource CaptionTextBlockStyle}"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                       Visibility="{x:Bind VM.HasSecondaryPin, Converter={StaticResource BoolToInvVisConverter}, Mode=OneWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Language Section ══════════════════════════════════════════ -->
+            <TextBlock Text="Language" Style="{StaticResource TitleTextBlockStyle}"/>
+
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="16">
+                <StackPanel Spacing="12">
+
+                    <TextBlock Text="Display Language" Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                        Skill names, item names, and monster names are loaded from the
+                        selected language file in Media.pk2. Reload PK2 after changing.
+                    </TextBlock>
+
+                    <ComboBox Header="Language"
+                              ItemsSource="{x:Bind VM.AvailableLanguages}"
+                              SelectedItem="{x:Bind VM.Language, Mode=TwoWay}"
+                              HorizontalAlignment="Stretch"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Save button ═══════════════════════════════════════════════ -->
+            <Button Content="Save Settings"
+                    Style="{StaticResource AccentButtonStyle}"
+                    HorizontalAlignment="Right"
+                    Click="SaveButton_Click"/>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

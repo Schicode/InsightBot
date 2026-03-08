@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="InsightBot.Views.Pages.HuntPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Padding="24">
+        <StackPanel Spacing="20" MaxWidth="700">
+
+            <TextBlock Text="Hunt Settings" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <Border Style="{StaticResource CardBorderStyle}">
+                <StackPanel Spacing="16" Padding="20">
+
+                    <!-- Max range -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Max Range (world units)" />
+                        <Slider x:Name="RangeSlider"
+                                Minimum="50" Maximum="800" StepFrequency="10"
+                                Value="{x:Bind VM.Hunt.MaxRange, Mode=TwoWay}" />
+                        <TextBlock Text="{x:Bind RangeSlider.Value, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!-- Min HP % -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Retreat when HP below (%)" />
+                        <Slider x:Name="HpSlider"
+                                Minimum="5" Maximum="80" StepFrequency="5"
+                                Value="{x:Bind VM.Hunt.MinHpPercent, Mode=TwoWay}" />
+                        <TextBlock Text="{x:Bind HpSlider.Value, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!-- Flags -->
+                    <CheckBox Content="Attack Elite monsters"
+                              IsChecked="{x:Bind VM.Hunt.AttackElite, Mode=TwoWay}" />
+                    <CheckBox Content="Attack Unique monsters"
+                              IsChecked="{x:Bind VM.Hunt.AttackUnique, Mode=TwoWay}" />
+
+                    <!-- Skill IDs (comma-separated) -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Attack Skill IDs (hex, comma-separated)" />
+                        <TextBox x:Name="SkillIdBox"
+                                 PlaceholderText="e.g. 0x076C,0x076D"
+                                 Text="{x:Bind VM.AttackSkillIdsText, Mode=TwoWay}" />
+                    </StackPanel>
+
+                    <!-- Target RefIDs -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Target RefIds (hex, comma-separated; empty = all)" />
+                        <TextBox Text="{x:Bind VM.TargetRefIdsText, Mode=TwoWay}"
+                                 PlaceholderText="e.g. 0x0001,0x0002" />
+                    </StackPanel>
+
+                    <!-- Ignore RefIDs -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Ignore RefIds (hex, comma-separated)" />
+                        <TextBox Text="{x:Bind VM.IgnoreRefIdsText, Mode=TwoWay}"
+                                 PlaceholderText="e.g. 0xBOSS1,0xBOSS2" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

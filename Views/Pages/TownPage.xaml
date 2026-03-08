@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="InsightBot.Views.Pages.TownPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:InsightBot.Views.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Padding="24">
+        <StackPanel Spacing="20" MaxWidth="700">
+
+            <TextBlock Text="Town &amp; Potions" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <!-- Town config -->
+            <Border Style="{StaticResource CardBorderStyle}">
+                <StackPanel Spacing="16" Padding="20">
+
+                    <TextBlock Text="Town" Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                    <ToggleSwitch Header="Enable Town Trips"
+                                  IsOn="{x:Bind VM.Town.Enabled, Mode=TwoWay}" />
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Return when inventory full (%)" />
+                        <Slider x:Name="InvSlider"
+                                Minimum="50" Maximum="100" StepFrequency="5"
+                                Value="{x:Bind VM.Town.InventoryFullPercent, Mode=TwoWay}" />
+                        <TextBlock Text="{x:Bind InvSlider.Value, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Return Scroll RefId (hex)" />
+                        <TextBox Text="{x:Bind VM.ReturnScrollRefIdText, Mode=TwoWay}"
+                                 PlaceholderText="0x0000" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Min HP Potions before town" />
+                        <NumberBox Value="{x:Bind VM.Town.MinHpPotionCount, Mode=TwoWay}"
+                                   Minimum="0" Maximum="200" SpinButtonPlacementMode="Inline" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Min MP Potions before town" />
+                        <NumberBox Value="{x:Bind VM.Town.MinMpPotionCount, Mode=TwoWay}"
+                                   Minimum="0" Maximum="200" SpinButtonPlacementMode="Inline" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+            <!-- Potion config -->
+            <Border Style="{StaticResource CardBorderStyle}">
+                <StackPanel Spacing="16" Padding="20">
+
+                    <TextBlock Text="Auto Potions" Style="{StaticResource SubtitleTextBlockStyle}" />
+
+                    <ToggleSwitch Header="Auto HP Potion"
+                                  IsOn="{x:Bind VM.Potions.AutoUseHpPotion, Mode=TwoWay}" />
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="HP Potion RefId (hex)" />
+                        <TextBox Text="{x:Bind VM.HpPotionRefIdText, Mode=TwoWay}"
+                                 PlaceholderText="0x0000" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Use HP Potion below (%)" />
+                        <Slider x:Name="HpSlider"
+                                Minimum="10" Maximum="90" StepFrequency="5"
+                                Value="{x:Bind VM.Potions.HpPotionThreshold, Mode=TwoWay}" />
+                        <TextBlock Text="{x:Bind HpSlider.Value, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <ToggleSwitch Header="Auto MP Potion"
+                                  IsOn="{x:Bind VM.Potions.AutoUseMpPotion, Mode=TwoWay}" />
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="MP Potion RefId (hex)" />
+                        <TextBox Text="{x:Bind VM.MpPotionRefIdText, Mode=TwoWay}"
+                                 PlaceholderText="0x0000" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Use MP Potion below (%)" />
+                        <Slider x:Name="MpSlider"
+                                Minimum="10" Maximum="90" StepFrequency="5"
+                                Value="{x:Bind VM.Potions.MpPotionThreshold, Mode=TwoWay}" />
+                        <TextBlock Text="{x:Bind MpSlider.Value, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Potion Cooldown (ms)" />
+                        <NumberBox Value="{x:Bind VM.Potions.CooldownMs, Mode=TwoWay}"
+                                   Minimum="200" Maximum="10000" SpinButtonPlacementMode="Inline" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>
