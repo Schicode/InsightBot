@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SROBot.Core.Network;
+namespace InsightBot.Core.Network.Examples;
 
 /// <summary>
 /// Demonstrates how to wire the network layer together.
